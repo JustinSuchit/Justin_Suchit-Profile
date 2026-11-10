@@ -151,26 +151,6 @@ const ALL = [...SITES, ...SYSTEMS];
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const lamp = (s) => `<span class="lamp lamp-${s.toLowerCase()}"></span>${esc(s)}`;
 
-document.getElementById("board").innerHTML = SITES.map((s) => `
-  <article class="site">
-    <p class="site-status">${lamp(s.status)}</p>
-    <div>
-      <button class="site-name" data-open="${s.slug}" aria-haspopup="dialog">${esc(s.name)}</button>
-      <p class="site-client">${esc(s.client)}</p>
-      <p class="site-desc">${esc(s.summary)}</p>
-    </div>
-    <p class="site-stack">${s.stack.slice(0, 4).map(esc).join(", ")}</p>
-    <div class="site-links">
-      ${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">Visit site</a>` : ""}
-      <button data-open="${s.slug}" aria-haspopup="dialog">Case notes</button>
-    </div>
-  </article>`).join("");
-
-document.getElementById("systems").innerHTML = SYSTEMS.map((s) => `
-  <button class="system" data-open="${s.slug}" aria-haspopup="dialog">
-    <b>${esc(s.name)}</b><span>${esc(s.summary)}</span>
-  </button>`).join("");
-
 // ---- Case notes dialog (deep-linkable via #case/<slug>) ----
 const dialog = document.getElementById("caseDialog");
 const caseBody = document.getElementById("caseBody");
@@ -215,48 +195,144 @@ dialog.addEventListener("click", (e) => {
   if (e.target === dialog || e.target.closest("[data-close]")) dialog.close();
 });
 dialog.addEventListener("close", () => {
-  if (location.hash.startsWith("#case/")) history.replaceState(null, "", "#sites");
+  if (location.hash.startsWith("#case/")) history.replaceState(null, "", location.pathname);
 });
 function route() {
   if (location.hash.startsWith("#case/")) openCase(location.hash.slice(6));
   else if (dialog.open) dialog.close();
 }
 window.addEventListener("hashchange", route);
-route();
 
-// ---- Menu and current-section highlight ----
-const links = document.getElementById("topLinks");
-const menuBtn = document.getElementById("menuBtn");
-menuBtn.addEventListener("click", () => {
-  menuBtn.setAttribute("aria-expanded", links.classList.toggle("open"));
-});
-links.addEventListener("click", (e) => {
-  if (e.target.tagName === "A") { links.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); }
-});
-if ("IntersectionObserver" in window) {
-  const anchors = [...links.querySelectorAll('a[href^="#"]')];
-  const spy = new IntersectionObserver((entries) => {
-    entries.forEach((en) => {
-      if (en.isIntersecting) anchors.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + en.target.id));
-    });
-  }, { rootMargin: "-40% 0px -55% 0px" });
-  document.querySelectorAll("main section[id]").forEach((s) => spy.observe(s));
+// ---- Per-page setup: runs on first load and after every page turn ----
+const CONTACT_EMAIL = "justinsuchit37@gmail.com";
+function init() {
+  const board = document.getElementById("board");
+  if (board) {
+    board.innerHTML = SITES.map((s) => `
+      <article class="site">
+        <p class="site-status">${lamp(s.status)}</p>
+        <div>
+          <button class="site-name" data-open="${s.slug}" aria-haspopup="dialog">${esc(s.name)}</button>
+          <p class="site-client">${esc(s.client)}</p>
+          <p class="site-desc">${esc(s.summary)}</p>
+        </div>
+        <p class="site-stack">${s.stack.slice(0, 4).map(esc).join(", ")}</p>
+        <div class="site-links">
+          ${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">Visit site</a>` : ""}
+          <button data-open="${s.slug}" aria-haspopup="dialog">Case notes</button>
+        </div>
+      </article>`).join("");
+    document.getElementById("systems").innerHTML = SYSTEMS.map((s) => `
+      <button class="system" data-open="${s.slug}" aria-haspopup="dialog">
+        <b>${esc(s.name)}</b><span>${esc(s.summary)}</span>
+      </button>`).join("");
+  }
+  const form = document.getElementById("contactForm");
+  if (form) form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const f = new FormData(form);
+    const subject = `${f.get("reason")} from ${f.get("name")}`;
+    const body = [
+      f.get("message"), "",
+      `Name: ${f.get("name")}`,
+      `Email: ${f.get("email")}`,
+      f.get("company") ? `Company: ${f.get("company")}` : null
+    ].filter((l) => l !== null).join("\n");
+    location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    document.getElementById("formNote").textContent = `Email draft opened. If nothing happened, write to ${CONTACT_EMAIL} directly.`;
+  });
+  route();
 }
 
-// ---- Contact form: opens the visitor's email app with the message filled in ----
-const CONTACT_EMAIL = "justinsuchit37@gmail.com";
-document.getElementById("contactForm").addEventListener("submit", (e) => {
+// ---- Page turns: links between pages flip like a book instead of reloading ----
+const PAGES = ["index.html", "websites.html", "experience.html", "skills.html", "education.html", "contact.html"];
+const pageIndex = (pathname) => {
+  let file = pathname.split("/").pop() || "index.html";
+  if (!file.includes(".")) file += ".html";
+  return PAGES.indexOf(file);
+};
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const cache = new Map();
+const load = (url) => {
+  if (!cache.has(url)) cache.set(url, fetch(url).then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); }));
+  return cache.get(url);
+};
+let current = pageIndex(location.pathname);
+let turning = false;
+
+function setRail(i) {
+  document.querySelectorAll("#rail li").forEach((li, n) => {
+    li.className = n === i ? "now" : n < i ? "passed" : "";
+    const a = li.querySelector("a");
+    if (n === i) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  });
+}
+const play = (el, cls, ms) => new Promise((done) => {
+  el.classList.add(cls);
+  const t = setTimeout(done, ms + 150);
+  el.addEventListener("animationend", (e) => { if (e.target === el) { clearTimeout(t); done(); } }, { once: true });
+});
+const aimPerspective = () => {
+  const stage = document.querySelector(".stage");
+  stage.style.perspectiveOrigin = `50% ${window.scrollY + window.innerHeight / 2 - stage.offsetTop}px`;
+};
+
+async function turnTo(href, push) {
+  const url = new URL(href, location.href);
+  const to = pageIndex(url.pathname);
+  if (to < 0 || turning) return;
+  turning = true;
+  let next;
+  try {
+    const doc = new DOMParser().parseFromString(await load(url.pathname), "text/html");
+    next = doc.querySelector("main");
+    if (!next) throw new Error("no main");
+    document.title = doc.title;
+  } catch (err) {
+    location.href = url.href; // e.g. opened from a file: fall back to a normal page load
+    return;
+  }
+  const dir = to >= current ? "fwd" : "back";
+  const old = document.querySelector("main");
+  const animate = !reducedMotion.matches;
+  if (dialog.open) dialog.close();
+  setRail(to);
+  if (animate) { aimPerspective(); await play(old, "out-" + dir, 420); }
+  next = document.importNode(next, true);
+  old.replaceWith(next);
+  if (push) history.pushState(null, "", url.pathname + url.hash);
+  window.scrollTo({ top: 0, behavior: "instant" });
+  current = to;
+  init();
+  if (animate) { aimPerspective(); await play(next, "in-" + dir, 500); next.classList.remove("in-" + dir); }
+  next.focus({ preventScroll: true });
+  turning = false;
+}
+
+document.addEventListener("click", (e) => {
+  const a = e.target.closest("a[href]");
+  if (!a || a.target || a.hasAttribute("download") || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+  const url = new URL(a.href, location.href);
+  if (url.origin !== location.origin || pageIndex(url.pathname) < 0) return;
   e.preventDefault();
-  const f = new FormData(e.target);
-  const subject = `${f.get("reason")} from ${f.get("name")}`;
-  const body = [
-    f.get("message"), "",
-    `Name: ${f.get("name")}`,
-    `Email: ${f.get("email")}`,
-    f.get("company") ? `Company: ${f.get("company")}` : null
-  ].filter((l) => l !== null).join("\n");
-  location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  document.getElementById("formNote").textContent = `Email draft opened. If nothing happened, write to ${CONTACT_EMAIL} directly.`;
+  if (pageIndex(url.pathname) === current) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  turnTo(url.href, true);
+});
+document.addEventListener("pointerover", (e) => {
+  const a = e.target.closest && e.target.closest("a[href]");
+  if (!a || a.target) return;
+  const url = new URL(a.href, location.href);
+  if (url.origin === location.origin && url.protocol !== "file:" && pageIndex(url.pathname) >= 0) load(url.pathname).catch(() => cache.delete(url.pathname));
+});
+window.addEventListener("popstate", () => {
+  if (pageIndex(location.pathname) !== current) turnTo(location.href, false);
+});
+document.addEventListener("keydown", (e) => {
+  if (dialog.open || e.metaKey || e.ctrlKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+  const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+  const target = PAGES[current + step];
+  if (step && target) turnTo(target, true);
 });
 
+init();
 document.getElementById("year").textContent = new Date().getFullYear();
