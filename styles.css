@@ -366,3 +366,55 @@ main .startup-grid { padding-top: 3rem; border-top: 0; }
 .hero-art [stroke="var(--blue)"] { stroke: var(--blue); }
 .hero-art [stroke="var(--soft)"] { stroke: var(--soft); }
 .hero-art [fill="var(--blue)"] { fill: var(--blue); }
+
+/* Experience: timeline you can read at a glance, one role at a time */
+.band .title { margin-bottom: 1rem; }
+#skills .title, #education .title { margin-bottom: 2.5rem; }
+.tl-hint { font-style: italic; color: var(--soft); margin-bottom: 2.25rem; }
+.tl { display: grid; grid-template-columns: repeat(4, 1fr); }
+.tl li { position: relative; }
+.tl li + li::before { content: ""; position: absolute; top: 2.55rem; right: 50%; width: 100%; height: 3px; margin-top: -1.5px; background: var(--line); transition: background .3s; }
+.tl li.passed::before, .tl li.now::before { background: var(--ink); }
+.tl button { all: unset; box-sizing: border-box; position: relative; z-index: 1; cursor: pointer; display: grid; justify-items: center; gap: .15rem; width: 100%; padding: 0 .4rem .75rem; text-align: center; border-radius: 4px; }
+.tl button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.stop-when { font: italic 500 1rem/1.3 var(--serif); color: var(--blue); height: 1.5rem; }
+.stop-year { display: none; font: italic 500 1rem/1.3 var(--serif); color: var(--blue); height: 1.5rem; }
+.tl .node { width: 1.6rem; height: 1.6rem; margin: .25rem 0 .6rem; border-radius: 50%; border: 3px solid #a8a08d; background: var(--paper); transition: transform .2s, background .3s, border-color .3s, box-shadow .3s; }
+.tl .passed .node { background: var(--ink); border-color: var(--ink); }
+.tl .now .node { background: var(--yellow); border-color: var(--ink); transform: scale(1.2); box-shadow: 0 0 0 7px rgb(245 197 24 / .3); }
+.tl button:hover .node { border-color: var(--ink); transform: scale(1.2); }
+.stop-what { font: 700 1.0625rem/1.25 var(--serif); background: linear-gradient(var(--yellow), var(--yellow)) no-repeat 50% 92% / 0 36%; transition: background-size .3s; }
+.tl .now .stop-what, .tl button:hover .stop-what { background-size: 100% 36%; }
+.stop-where { font-style: italic; color: var(--soft); font-size: .95rem; }
+@media (max-width: 700px) {
+  .stop-when, .stop-what { display: none; }
+  .stop-year { display: block; }
+  .stop-where { font-size: .82rem; line-height: 1.25; }
+}
+.roles { border-top: 0; margin-top: 1.5rem; }
+.role { border-bottom: 0; padding: 2.25rem 0 0; border-top: 2px solid var(--ink); }
+.role[hidden] { display: none; }
+.role:not([hidden]) { animation: rise .4s cubic-bezier(.2, .7, .2, 1); }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+.role-side { display: flex; gap: 1.25rem; align-items: center; }
+.role-art { width: 7rem; height: auto; }
+@media (min-width: 900px) {
+  .role { grid-template-columns: 15rem 1fr; }
+  .role-side { display: block; }
+  .role-art { width: 11rem; margin-bottom: 1.25rem; }
+}
+.role-lead { font: italic 400 1.2rem/1.5 var(--serif); margin-top: .9rem; max-width: 52ch; }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem .6rem; margin-top: 1.1rem; }
+.chips li { font: 600 .9rem/1 var(--ui); padding: .45rem .7rem; background: linear-gradient(transparent 55%, var(--yellow) 55%); }
+.role ul.chips { display: flex; max-width: none; }
+.role ul.chips li { padding-left: .7rem; }
+.role ul.chips li::before { display: none; }
+.role-points { margin-top: 1.5rem; }
+.steps { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+.step { all: unset; cursor: pointer; display: grid; gap: .1rem; }
+.step:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+.step span { font: italic 400 .9375rem var(--serif); color: var(--soft); }
+.step b { font: 700 1.05rem/1.3 var(--serif); background: linear-gradient(var(--yellow), var(--yellow)) no-repeat 0 90% / 0 36%; transition: background-size .3s; justify-self: start; }
+.step:hover b { background-size: 100% 36%; }
+.step-later { text-align: right; justify-items: end; }
+.step-later b { justify-self: end; }

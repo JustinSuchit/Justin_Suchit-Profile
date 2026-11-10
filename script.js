@@ -314,6 +314,31 @@ function setupWheel(wheel) {
   place();
 }
 
+// ---- Experience timeline: pick a stop to show one role at a time ----
+function setupTimeline(tl) {
+  const stops = [...tl.querySelectorAll("[data-stop]")];
+  const panels = [...document.querySelectorAll(".roles .role")];
+  const show = (i) => {
+    stops.forEach((s, n) => {
+      s.parentElement.className = n === i ? "now" : n < i ? "passed" : "";
+      s.setAttribute("aria-pressed", n === i);
+    });
+    panels.forEach((p, n) => { p.hidden = n !== i; });
+  };
+  tl.addEventListener("click", (e) => {
+    const s = e.target.closest("[data-stop]");
+    if (s) show(Number(s.dataset.stop));
+  });
+  document.querySelector(".roles").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-to]");
+    if (!b) return;
+    const i = Number(b.dataset.to);
+    show(i);
+    stops[i].focus({ preventScroll: true });
+  });
+  show(Number(tl.dataset.start) || 0);
+}
+
 // ---- Per-page setup: runs on first load and after every page turn ----
 const CONTACT_EMAIL = "justinsuchit37@gmail.com";
 function init() {
@@ -354,6 +379,8 @@ function init() {
         <b>${esc(s.name)}</b><span>${esc(s.summary)}</span>
       </button>`).join("");
   }
+  const timeline = document.getElementById("timeline");
+  if (timeline) setupTimeline(timeline);
   const form = document.getElementById("contactForm");
   if (form) form.addEventListener("submit", (e) => {
     e.preventDefault();
