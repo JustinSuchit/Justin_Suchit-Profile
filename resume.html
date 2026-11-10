@@ -3,118 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resume — Justin Verendra Suchit</title>
-<meta name="description" content="Resume of Justin Verendra Suchit — Junior IT Specialist: software and web development, data and ERP systems, cloud computing.">
+<title>Resume | Justin Verendra Suchit</title>
+<meta name="description" content="Resume of Justin Verendra Suchit: IT Project Coordinator, Full-Stack Web Developer, B.Sc. Information Technology.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root { --ink: #14171c; --muted: #5a6473; --line: #d9dee6; --red: #d92d2d; }
+@font-face { font-family: "Barlow"; font-weight: 400; font-style: normal; font-display: swap; src: url("assets/fonts/barlow-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Barlow"; font-weight: 500; font-style: normal; font-display: swap; src: url("assets/fonts/barlow-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Barlow"; font-weight: 600; font-style: normal; font-display: swap; src: url("assets/fonts/barlow-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 600; font-style: normal; font-display: swap; src: url("assets/fonts/barlow-condensed-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; font-style: normal; font-display: swap; src: url("assets/fonts/barlow-condensed-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 800; font-style: normal; font-display: swap; src: url("assets/fonts/barlow-condensed-latin-800-normal.woff2") format("woff2"); }
+
+  :root { --ink: #10242c; --soft: #4d626b; --line: #c4cdd2; --blue: #1b5e7b; --steel: #e8ecee; }
   * { box-sizing: border-box; }
-  body { margin: 0; background: #0a0c10; font-family: "Inter", system-ui, sans-serif; color: var(--ink); line-height: 1.5; font-size: 14px; }
-  .bar { max-width: 850px; margin: 0 auto; padding: 1.25rem 1rem; display: flex; justify-content: space-between; gap: .75rem; flex-wrap: wrap; }
-  .bar a, .bar button { height: 2.5rem; padding: 0 1rem; display: inline-flex; align-items: center; border-radius: .6rem; border: 1px solid #262b36; background: transparent; color: #f9fafb; font: 500 .85rem "Inter", sans-serif; text-decoration: none; cursor: pointer; }
-  .bar button { background: #ef4343; border-color: #ef4343; }
-  .page { max-width: 850px; margin: 0 auto 3rem; background: #fff; padding: 3rem; border-radius: .5rem; }
-  h1 { margin: 0; font-size: 2rem; font-weight: 800; letter-spacing: -.02em; }
-  .title { color: var(--red); font-weight: 600; margin: .25rem 0 .5rem; }
-  .contact { color: var(--muted); font-size: .85rem; }
+  body { margin: 0; background: var(--steel); color: var(--ink); font: 400 15px/1.5 "Barlow", system-ui, sans-serif; }
+  .bar { max-width: 860px; margin: 0 auto; padding: 1.25rem 1rem; display: flex; justify-content: space-between; gap: .75rem; flex-wrap: wrap; }
+  .bar a, .bar button { min-height: 2.75rem; padding: 0 1.1rem; display: inline-flex; align-items: center; border-radius: 3px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); font: 600 .95rem "Barlow", sans-serif; text-decoration: none; cursor: pointer; }
+  .bar button { background: var(--ink); color: #fff; }
+  .page { max-width: 860px; margin: 0 auto 3rem; background: #fff; padding: 3rem; }
+  h1 { margin: 0; font: 800 3.25rem/.9 "Barlow Condensed", sans-serif; text-transform: uppercase; }
+  .title { font-weight: 600; margin: .6rem 0 .3rem; }
+  .contact { color: var(--soft); font-size: .92rem; margin: 0; }
   .contact a { color: inherit; }
-  h2 { margin: 1.75rem 0 .75rem; padding-bottom: .35rem; border-bottom: 2px solid var(--ink); font: 700 .78rem "JetBrains Mono", monospace; letter-spacing: .12em; text-transform: uppercase; }
-  .item { margin-bottom: 1rem; break-inside: avoid; }
-  .item-head { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .item-head b { font-size: 1rem; }
-  .item-head span { color: var(--muted); font-size: .82rem; white-space: nowrap; }
-  .org { color: var(--red); font-weight: 500; font-size: .9rem; }
+  h2 { margin: 1.75rem 0 .7rem; padding-bottom: .25rem; border-bottom: 2.5px solid var(--ink); font: 700 1.3rem/1.1 "Barlow Condensed", sans-serif; text-transform: uppercase; letter-spacing: .02em; }
+  p { margin: .3rem 0 0; }
+  .item { margin-bottom: 1.1rem; break-inside: avoid; }
+  .item-head { display: flex; justify-content: space-between; gap: .25rem 1rem; flex-wrap: wrap; }
+  .item-head b { font-size: 1.05rem; }
+  .item-head span { color: var(--soft); font-size: .9rem; }
+  .org { color: var(--blue); font-weight: 600; }
   ul { margin: .4rem 0 0; padding-left: 1.1rem; }
   li { margin-bottom: .2rem; }
-  p { margin: .3rem 0 0; }
-  .skills { display: grid; grid-template-columns: 9rem 1fr; gap: .4rem 1rem; }
-  .skills dt { font-weight: 700; }
-  .skills dd { margin: 0; }
-  @media (max-width: 600px) { .page { padding: 1.5rem; } .skills { grid-template-columns: 1fr; gap: 0; } .skills dd { margin-bottom: .6rem; } }
+  @media (max-width: 600px) { .page { padding: 1.5rem; } h1 { font-size: 2.5rem; } }
   @media print {
-    body { background: #fff; font-size: 11.5px; }
+    body { background: #fff; font-size: 11px; }
     .bar { display: none; }
-    .page { margin: 0; padding: 0; max-width: none; border-radius: 0; }
-    @page { margin: 14mm; }
+    .page { margin: 0; padding: 0; max-width: none; }
+    h1 { font-size: 2.4rem; }
+    h2 { margin-top: 1.1rem; }
+    @page { margin: 13mm; }
   }
 </style>
 </head>
 <body>
 <div class="bar">
-  <a href="index.html#resume">← Back to portfolio</a>
-  <button onclick="window.print()">Print / Save as PDF</button>
+  <a href="index.html">Back to the site</a>
+  <button onclick="window.print()">Print or save as PDF</button>
 </div>
 
 <main class="page">
   <h1>Justin Verendra Suchit</h1>
-  <p class="title">Junior IT Specialist | Software &amp; Web Development | Data &amp; ERP Systems | Cloud Computing</p>
-  <p class="contact">Trinidad &amp; Tobago · <a href="mailto:justinsuchit37@gmail.com">justinsuchit37@gmail.com</a> · <a href="https://www.linkedin.com/in/justin-suchit">linkedin.com/in/justin-suchit</a> · <a href="https://github.com/justinsuchit">github.com/justinsuchit</a></p>
+  <p class="title">IT Project Coordinator | Full-Stack Web Developer | B.Sc. Information Technology</p>
+  <p class="contact"><a href="mailto:justinsuchit37@gmail.com">justinsuchit37@gmail.com</a> | Trinidad &amp; Tobago | <a href="https://www.linkedin.com/in/justin-suchit-687128273">linkedin.com/in/justin-suchit-687128273</a></p>
 
-  <h2>Professional Summary</h2>
-  <p>Information Technology graduate of The University of the West Indies, St. Augustine, with hands-on internship experience across IT support, networking, databases, software development, and business operations. Looking for an ICT role in which to apply these technical skills and continue developing professionally.</p>
+  <h2>Professional summary</h2>
+  <p>B.Sc. Information Technology graduate (UWI St. Augustine, 2026) who coordinates and delivers live technology projects across a multi-company group. Currently supports AMCOL Group's digital platforms, including an e-commerce catalogue of 20,000+ products and an internal RFQ/procurement system, managing the full cycle from requirements gathering and stakeholder communication to testing, deployment, documentation and technical handover. Combines hands-on development (Next.js, PHP, JavaScript, SQL, Supabase) with project coordination strengths: issue tracking, status reporting, change management and cross-functional collaboration. Previously worked in corporate IT, Planning and port operations at PLIPDECO. Seeking an IT Project Coordinator, Junior IT Project Manager or Technical Project Coordinator role.</p>
 
-  <h2>Work Experience</h2>
+  <h2>Core competencies</h2>
+  <p><b>Project coordination:</b> Project coordination | Requirements gathering | Stakeholder management | Status reporting | Issue and risk tracking | Project documentation | Deliverables tracking | Change management | Technical handover | Cross-functional collaboration | Vendor and supplier workflows (RFQ / procurement)</p>
+  <p><b>Software &amp; web development:</b> Next.js | React-based front ends | PHP | JavaScript | HTML/CSS | Responsive design | REST-style integrations | SEO and performance optimization | Production support | Legacy system maintenance</p>
+  <p><b>Data, cloud &amp; delivery:</b> Supabase | SQL / relational databases | Git / GitHub version control | Vercel | cPanel | CI/CD-style deployment | Backup and recovery procedures | ERP / business systems | Data integrity and reporting</p>
+  <p><b>IT operations &amp; security:</b> IT support and troubleshooting | Network administration | VLANs / Cisco networking | IT asset management | Information security awareness | Anti-phishing awareness | Service-desk processes</p>
+
+  <h2>Professional experience</h2>
   <div class="item">
-    <div class="item-head"><b>IT Assistant Intern</b><span>July 2025 — August 2025</span></div>
-    <div class="org">Point Lisas Industrial Port (PLIPDECO)</div>
+    <div class="item-head"><b>Web Developer / Software Developer</b><span>May 2026 - Present | Trinidad &amp; Tobago</span></div>
+    <div class="org">AMCOL Group of Companies</div>
     <ul>
-      <li>Provided technical support and assistance to the IT department, contributing to daily operations and system maintenance.</li>
-      <li>Assisted with hardware and software troubleshooting, reducing downtime for end users.</li>
-      <li>Supported network monitoring and administration tasks under the guidance of senior IT staff.</li>
-      <li>Documented IT procedures and contributed to internal knowledge base improvements.</li>
+      <li>Coordinate and deliver technical work across AMCOL Hardware, AMCOL Industrial and other group operations, taking items from requirement or fault identification through development, testing, deployment and documented handover.</li>
+      <li>Gather and translate requirements from staff and business stakeholders into technical tasks; log, prioritize and track issues and changes to closure.</li>
+      <li>Support AMCOL Hardware's e-commerce platform and 20,000+ item product catalogue: product data and image workflows, SEO, performance improvements, live-site troubleshooting and production incident resolution.</li>
+      <li>Contribute to an internal RFQ and procurement application (Next.js, Supabase) covering RFQs, supplier quotations, approval workflows, customer records, notifications and email-intake automation.</li>
+      <li>Maintain release discipline using Git/GitHub change management, documented deployment procedures, backups and recovery plans when updating live systems.</li>
+      <li>Work across modern (Next.js, Supabase, Vercel) and legacy (PHP, cPanel) stacks, communicating technical issues clearly to non-technical users and management.</li>
     </ul>
   </div>
   <div class="item">
-    <div class="item-head"><b>Data Entry &amp; Coordination Intern</b><span>July 2024 — August 2024</span></div>
-    <div class="org">Point Lisas Industrial Port (PLIPDECO)</div>
+    <div class="item-head"><b>IT Assistant Intern</b><span>Jul 2025 - Aug 2025 | Point Lisas, Trinidad</span></div>
+    <div class="org">Point Lisas Industrial Port Development Corporation (PLIPDECO)</div>
     <ul>
-      <li>Performed accurate data entry and maintained administrative databases for the Planning Department, ensuring data integrity across records.</li>
-      <li>Assisted the Marine and Harbor Department with coordination tasks, improving inter-departmental communication and workflow efficiency.</li>
-      <li>Reviewed and updated administrative records, contributing to organizational compliance and reporting accuracy.</li>
-      <li>Gained hands-on experience with Navis and SPARCS port operations software used in marine logistics management.</li>
+      <li>Delivered day-to-day IT support (hardware, software, user access) in a corporate environment, resolving and escalating tickets within structured IT service processes.</li>
+      <li>Supported network monitoring, IT asset management, system maintenance and technical documentation under senior IT staff.</li>
+      <li>Contributed to anti-phishing and information security awareness activities.</li>
+      <li>Gained exposure to enterprise infrastructure, server-room operations, fibre/network environments and ERP/business systems.</li>
     </ul>
   </div>
+  <div class="item">
+    <div class="item-head"><b>Data Entry &amp; Coordination Intern, Planning</b><span>Jul 2024 - Aug 2024 | Point Lisas, Trinidad</span></div>
+    <div class="org">PLIPDECO</div>
+    <ul>
+      <li>Maintained planning and administrative records with a focus on accuracy, data integrity and operational reporting.</li>
+      <li>Coordinated information between Planning, Marine and Harbour departments; exposure to Navis N4/SPARCS and port/logistics workflows.</li>
+      <li>Updated project documentation and prepared routine reports, building experience in cross-department communication and structured processes.</li>
+    </ul>
+  </div>
+
+  <h2>Selected projects</h2>
+  <div class="item"><p><b>AMCOL RFQ / Procurement Platform</b> (Next.js, Supabase, SQL): Full-stack business application for RFQs, supplier quotations, approvals, notifications and email intake. Contributed to requirements discussions, implementation, testing and troubleshooting.</p></div>
+  <div class="item"><p><b>AMCOL Hardware Digital Operations</b> (PHP, SQL, cPanel): Support a large legacy e-commerce environment: catalogue and image-data workflows, SEO and performance, deployment, backups/recovery and production issue resolution.</p></div>
+  <div class="item"><p><b>AMCOL Industrial Platform</b> (Next.js, Supabase, Vercel): Product/category administration, database-backed workflows, authentication, deployment and ongoing UI and content improvements.</p></div>
+  <div class="item"><p><b>Jagmohan Sawmill Website (jagmohancoltd.com)</b> (Next.js, React, responsive web design, SEO): Independently designed, developed and launched a full-stack business website for Jebodh Jagmohan and Company Ltd, a Trinidad &amp; Tobago lumber, hardware, haulage and site-services supplier. Delivered product pages (lumber, tools, concrete sleepers), a services section, a request-a-quote flow with product pre-selection, WhatsApp and click-to-call enquiry links, FAQ and contact/map pages, light/dark theme, and SEO/Open Graph metadata. Handled requirements gathering with the client, UI/UX design, development, deployment and ongoing updates. Live at <a href="https://www.jagmohancoltd.com">https://www.jagmohancoltd.com</a></p></div>
 
   <h2>Education</h2>
   <div class="item">
-    <div class="item-head"><b>B.Sc. Information Technology</b><span>Sept 2022 — May 2026</span></div>
-    <div class="org">University of the West Indies – St. Augustine</div>
-    <p>Relevant coursework: Database Systems, Network Administration, Web Development, ERP Systems, Cloud Computing, Network Security.</p>
+    <div class="item-head"><b>Bachelor of Science (B.Sc.) in Information Technology</b><span>Sept 2022 - May 2026</span></div>
+    <div class="org">The University of the West Indies, St. Augustine</div>
+    <p>Database Systems | Network Administration | Web Development | Software Engineering | Information Security | Enterprise/Business Technology</p>
   </div>
   <div class="item">
-    <div class="item-head"><b>CAPE (Units 1 &amp; 2)</b><span>Sept 2020 — June 2022</span></div>
+    <div class="item-head"><b>CAPE Units 1 &amp; 2</b><span>2020 - 2022</span></div>
     <div class="org">Shiva Boys Hindu College</div>
-    <p>Information Technology, Accounting, Management of Business.</p>
-  </div>
-  <div class="item">
-    <div class="item-head"><b>CSEC</b><span>Sept 2015 — June 2020</span></div>
-    <div class="org">Shiva Boys Hindu College</div>
-    <p>Achieved passes in all subjects.</p>
+    <p>Information Technology, Accounting, Management of Business</p>
   </div>
 
-  <h2>Skills</h2>
-  <dl class="skills">
-    <dt>Professional</dt><dd>Software &amp; web development, Navis &amp; SPARCS, database administration, ERP implementation, data analytics, financial reporting, networking, inventory management, Microsoft Office, AutoCAD, Peachtree, graphic design, social media management, budgeting &amp; forecasting</dd>
-    <dt>Programming</dt><dd>C++, JavaScript, Python, HTML/CSS, SQL</dd>
-    <dt>Networking</dt><dd>Cisco Packet Tracer, VLANs, routing &amp; switching, network troubleshooting</dd>
-    <dt>Databases</dt><dd>MySQL, SQL Server, database design, OracleLive</dd>
-    <dt>Cloud &amp; OS</dt><dd>Windows, Linux, cloud fundamentals, OpenStack management</dd>
-  </dl>
-
-  <h2>Projects</h2>
-  <div class="item"><b>Kalloos E-Commerce Website</b><p>Responsive e-commerce site with a product catalogue, database integration, and SEO practices.</p></div>
-  <div class="item"><b>Network Administration Project</b><p>VLANs, inter-VLAN routing, RIPv2, and EtherChannel for segmentation and redundancy in Cisco Packet Tracer.</p></div>
-  <div class="item"><b>Database Systems Project</b><p>Relational database design, SQL queries, normalization, and reporting.</p></div>
-
-  <h2>Certifications</h2>
-  <div class="item"><b>Certified Junior Automotive Mechanic</b> — National Energy Skills Centre (NESC)</div>
-
-  <h2>Volunteer Experience</h2>
-  <div class="item"><b>Charity Volunteer</b> — Shiva Boys Hindu College: community outreach and fundraising.</div>
-  <div class="item"><b>CSR Volunteer</b> — PLIPDECO: corporate social responsibility activities during the internship.</div>
+  <h2>Certifications &amp; additional</h2>
+  <ul>
+    <li>Certified Junior Automotive Mechanic, National Energy Skills Centre (NESC)</li>
+    <li>Volunteer: PLIPDECO corporate social responsibility initiatives; community outreach, Shiva Boys Hindu College</li>
+  </ul>
 </main>
 <script>if (new URLSearchParams(location.search).has("print")) window.addEventListener("load", () => setTimeout(() => window.print(), 400));</script>
 </body>
