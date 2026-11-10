@@ -341,3 +341,36 @@ main.out-back::after, main.in-back::after { transform: scaleX(-1); }
 @media (max-width: 600px) { .page-art { right: 1.25rem; top: -.5rem; width: 5.5rem; } }
 .skill-icon { display: block; width: 3rem; height: 3rem; margin-bottom: .9rem; }
 .doodle-plane { display: block; width: 12rem; height: auto; margin-top: 2rem; }
+
+/* Doodle motion */
+.doodle * { transform-box: fill-box; transform-origin: center; }
+.doodle .sway { transform-box: view-box; transform-origin: 260px 78px; }
+.twinkle { animation: twinkle 2.6s ease-in-out infinite; }
+.twinkle.t2 { animation-delay: .9s; }
+.twinkle.t3 { animation-delay: 1.7s; }
+@keyframes twinkle { 0%, 100% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(.45) rotate(45deg); opacity: .35; } }
+.pulse { animation: pulse 2.75s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: .2; transform: scaleX(.9); } 50% { opacity: 1; transform: scaleX(1.06); } }
+.tap { animation: tap 2.75s ease-in-out infinite; }
+@keyframes tap { 0%, 70%, 100% { transform: translate(0, 0); } 80% { transform: translate(-5px, -5px) scale(.88); } 90% { transform: translate(0, 0); } }
+.scribble { animation: scribble 1.6s ease-in-out infinite; }
+@keyframes scribble { 0%, 100% { transform: translate(0, 0) rotate(0); } 25% { transform: translate(-7px, 2px) rotate(-3deg); } 50% { transform: translate(-1px, -2px) rotate(1deg); } 75% { transform: translate(-9px, 1px) rotate(-4deg); } }
+.doodle-arrow { animation: nudge 1.8s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateY(1.4rem) rotate(8deg); } 50% { transform: translate(.35rem, 1.9rem) rotate(8deg); } }
+.title::after, .routes h2::after { animation: draw 1s .25s cubic-bezier(.3, .7, .2, 1) both; }
+@keyframes draw { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.skill-icon { animation: hop 3.2s ease-in-out infinite; }
+.skill:nth-child(2) .skill-icon { animation-delay: .35s; }
+.skill:nth-child(3) .skill-icon { animation-delay: .7s; }
+.skill:nth-child(4) .skill-icon { animation-delay: 1.05s; }
+@keyframes hop { 0%, 22%, 100% { transform: translateY(0) rotate(0); } 8% { transform: translateY(-7px) rotate(-6deg); } 15% { transform: translateY(0) rotate(3deg); } }
+.page-art { animation: bob 4s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-7px) rotate(2deg); } }
+.clasp { animation: twinkle 3s ease-in-out infinite; }
+.doodle .tassel { transform-box: view-box; transform-origin: 154px 48px; animation: swing 2.4s ease-in-out infinite; }
+@keyframes swing { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(9deg); } }
+.trail { animation: march 1.2s linear infinite; }
+@keyframes march { to { stroke-dashoffset: -28; } }
+.fly { animation: fly 3s ease-in-out infinite; }
+@keyframes fly { 0%, 100% { transform: translate(0, 0) rotate(0); } 50% { transform: translate(7px, -8px) rotate(-4deg); } }
+.doodle-craft .twinkle, .hero-art .twinkle, .page-art .twinkle { transform-origin: center; }
