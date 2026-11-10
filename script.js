@@ -61,13 +61,17 @@ const SITES = [
       "Created data-entry guidelines and quality-control procedures."
     ],
     solution: "Built standardized data pipelines using Excel, Airtable and Python scraping, with documented quality-control procedures for the team.",
-    results: "A structured framework for managing 20,000+ product records with standardized SEO and quality control."
+    results: "A structured framework for managing 20,000+ product records with standardized SEO and quality control.",
+    figures: [
+      { n: "20,000+", label: "products in the catalogue" },
+      { n: "150", label: "product entries per person per day, the target the data-entry workflow was designed for" }
+    ]
   },
   {
     slug: "amcol-industrial",
     name: "amcolindustrial.com",
     client: "AMCOL Industrial",
-    status: "Live", url: "https://www.amcolindustrial.com/",
+    status: "Live", url: "https://amcolindustrial.com/",
     summary: "Development, testing and ongoing improvement of a modern industrial supply platform.",
     stack: ["Next.js", "React", "Supabase", "Vercel", "JavaScript", "GitHub"],
     role: "Front-end developer and QA",
@@ -104,9 +108,9 @@ const SITES = [
   {
     slug: "caribbean-transport-services",
     name: "caribbeantransportservices.com",
-    client: "Caribbean Transport Services (AMCOL Haulage & Logistics)",
+    client: "AMCOL Haulage & Logistics",
     status: "Live", url: "https://www.caribbeantransportservices.com/",
-    summary: "A responsive website for a transportation, logistics and haulage company.",
+    summary: "A responsive website for the group's heavy haulage, cargo and transport division.",
     stack: ["HTML", "CSS", "JavaScript", "Supabase", "GitHub", "Vercel", "SEO"],
     role: "Web developer",
     overview: "Service pages, SEO configuration, sitemaps and a secure admin login approach for a logistics and haulage company.",
@@ -162,7 +166,11 @@ const SYSTEMS = [
       "Used browser automation for websites that standard web requests could not process.",
       "Evaluated token usage, accuracy, API costs and search provider limits for AI-assisted verification."
     ],
-    results: "A working batch image-sourcing pipeline with confidence scoring and review workflows."
+    results: "A working batch image-sourcing pipeline with confidence scoring and review workflows.",
+    figures: [
+      { n: "20,000+", label: "products in the catalogue the tool searches" },
+      { n: "3", label: "result groups: matched, needs review, failed" }
+    ]
   },
   {
     slug: "product-data-seo",
@@ -182,6 +190,12 @@ const SYSTEMS = [
     results: "A reusable SEO and data framework that keeps thousands of products consistent."
   }
 ];
+
+// Slugs that have a screenshot at assets/sites/<slug>.jpg
+const SHOTS = new Set(["webcraft-tt", "jagmohan-sawmill", "amcol-industrial", "amcol-group", "caribbean-transport-services"]);
+const shot = (s, big) => SHOTS.has(s.slug)
+  ? `<img class="shot" src="assets/sites/${s.slug}.jpg" alt="Screenshot of ${esc(s.name)}" width="800" height="500" ${big ? "" : 'loading="lazy"'}>`
+  : `<span class="shot shot-none" aria-hidden="true">${esc(s.client.split(",")[0])}</span>`;
 
 const ALL = [...SITES, ...SYSTEMS];
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -204,6 +218,8 @@ function openCase(slug) {
       <h2 id="caseTitle">${esc(s.name)}</h2>
       <p class="case-sum">${esc(s.summary)}</p>
       ${s.url ? `<div class="actions"><a class="btn btn-solid" href="${s.url}" target="_blank" rel="noopener">Visit site</a></div>` : ""}
+      ${SHOTS.has(s.slug) ? `<div class="case-shot">${shot(s, true)}</div>` : ""}
+      ${s.figures ? `<dl class="figures">${s.figures.map((f) => `<div><dt>${esc(f.n)}</dt><dd>${esc(f.label)}</dd></div>`).join("")}</dl>` : ""}
       <div class="case-grid">
         <div class="case-main">
           ${part("Overview", s.overview && `<p>${esc(s.overview)}</p>`)}
@@ -246,13 +262,14 @@ function init() {
   if (board) {
     board.innerHTML = SITES.map((s) => `
       <article class="site">
-        <p class="site-status">${lamp(s.status)}</p>
-        <div>
+        <button class="site-shot" data-open="${s.slug}" aria-label="Case notes for ${esc(s.name)}" tabindex="-1">${shot(s)}</button>
+        <div class="site-body">
+          <p class="site-status">${lamp(s.status)}</p>
           <button class="site-name" data-open="${s.slug}" aria-haspopup="dialog">${esc(s.name)}</button>
           <p class="site-client">${esc(s.client)}</p>
           <p class="site-desc">${esc(s.summary)}</p>
+          <p class="site-stack">${s.stack.slice(0, 4).map(esc).join(", ")}</p>
         </div>
-        <p class="site-stack">${s.stack.slice(0, 4).map(esc).join(", ")}</p>
         <div class="site-links">
           ${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">Visit site</a>` : ""}
           <button data-open="${s.slug}" aria-haspopup="dialog">Case notes</button>
