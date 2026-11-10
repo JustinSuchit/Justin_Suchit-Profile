@@ -1,6 +1,25 @@
 // ---- Websites and systems: edit here to add or change entries ----
 const SITES = [
   {
+    slug: "webcraft-tt",
+    name: "webcraft-tt.com",
+    client: "WebCraft TT, my own web design business",
+    status: "Live", url: "https://webcraft-tt.com/",
+    summary: "The website for my startup, which builds websites, online stores and custom web systems for businesses in Trinidad & Tobago.",
+    stack: ["Responsive web design", "Quote builder", "SEO", "Case studies"],
+    role: "Founder, designer and developer",
+    overview: "WebCraft TT is my independent web design business. Its tagline is Websites. Systems. Solutions. I work directly with each client from the first brief to handover.",
+    work: [
+      "Business websites for local companies.",
+      "Online stores and catalogues with quote requests and orders.",
+      "Custom web systems: dashboards, quotation and invoice tools, customer records and workflow automation.",
+      "Website maintenance under an agreed care plan.",
+      "A build-your-quote tool so clients can plan a website and get a written quote.",
+      "Published case studies for client projects."
+    ],
+    results: "Live at webcraft-tt.com, with packages, pricing and a portfolio of client work."
+  },
+  {
     slug: "jagmohan-sawmill",
     name: "jagmohancoltd.com",
     client: "Jebodh Jagmohan and Company Ltd",
@@ -66,9 +85,26 @@ const SITES = [
     results: "Improved navigation accuracy, SEO metadata and responsive layouts across the site."
   },
   {
+    slug: "amcol-group",
+    name: "amcolgroup.com",
+    client: "AMCOL Group",
+    status: "Live", url: "https://amcolgroup.com/",
+    summary: "Collaborative improvements to the group's corporate website.",
+    stack: ["Content", "Navigation", "Company directory"],
+    role: "Contributing web developer",
+    overview: "The corporate site for AMCOL Group of Companies. I contributed improvements alongside the team rather than building it from scratch.",
+    work: [
+      "Improved the company directory.",
+      "Updated site content.",
+      "Improved navigation.",
+      "Improved the contact experience."
+    ],
+    results: "A clearer corporate site for the group's companies."
+  },
+  {
     slug: "caribbean-transport-services",
     name: "caribbeantransportservices.com",
-    client: "Caribbean Transport Services",
+    client: "Caribbean Transport Services (AMCOL Haulage & Logistics)",
     status: "Live", url: "https://www.caribbeantransportservices.com/",
     summary: "A responsive website for a transportation, logistics and haulage company.",
     stack: ["HTML", "CSS", "JavaScript", "Supabase", "GitHub", "Vercel", "SEO"],
