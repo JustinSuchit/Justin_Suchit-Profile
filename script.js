@@ -255,26 +255,100 @@ function route() {
 }
 window.addEventListener("hashchange", route);
 
+// ---- Website wheel: scrolling over it moves between sites instead of the page ----
+function setupWheel(wheel) {
+  const cards = [...wheel.querySelectorAll(".wcard")];
+  const nodes = [...wheel.querySelectorAll("[data-go]")];
+  const count = wheel.querySelector("#wheelCount");
+  const stage = wheel.querySelector(".wheel-stage");
+  const last = cards.length - 1;
+  let idx = 0, locked = false;
+
+  function place() {
+    cards.forEach((card, i) => {
+      const d = i - idx;
+      let t = "none", o = 1;
+      if (d === 1) { t = "translateY(calc(100% + 1.25rem)) rotateX(-20deg) scale(.96)"; o = .55; }
+      else if (d > 1) { t = "translateY(calc(200% + 2.5rem)) rotateX(-40deg) scale(.9)"; o = 0; }
+      else if (d < 0) { t = "translateY(-75%) rotateX(32deg) scale(.94)"; o = 0; }
+      card.style.transform = t;
+      card.style.opacity = o;
+      card.style.zIndex = d === 0 ? 2 : 1;
+      card.inert = d !== 0;
+      card.classList.toggle("is-next", d === 1);
+    });
+    nodes.forEach((n, i) => {
+      n.parentElement.className = i === idx ? "now" : i < idx ? "passed" : "";
+      if (i === idx) n.setAttribute("aria-current", "true"); else n.removeAttribute("aria-current");
+    });
+    wheel.querySelector('[data-step="-1"]').disabled = idx === 0;
+    wheel.querySelector('[data-step="1"]').disabled = idx === last;
+    count.textContent = `${idx + 1} of ${cards.length}`;
+  }
+  const go = (i) => { idx = Math.max(0, Math.min(last, i)); place(); };
+
+  wheel.addEventListener("wheel", (e) => {
+    if (Math.abs(e.deltaY) < 4) return;
+    if (locked) { e.preventDefault(); return; }
+    const next = idx + Math.sign(e.deltaY);
+    if (next < 0 || next > last) return; // at either end, let the page scroll on
+    e.preventDefault();
+    locked = true;
+    setTimeout(() => { locked = false; }, 620);
+    go(next);
+  }, { passive: false });
+
+  wheel.addEventListener("keydown", (e) => {
+    const step = { ArrowDown: 1, PageDown: 1, ArrowUp: -1, PageUp: -1 }[e.key];
+    if (!step || e.target.closest("a")) return;
+    e.preventDefault();
+    go(idx + step);
+  });
+  wheel.addEventListener("click", (e) => {
+    const stepBtn = e.target.closest("[data-step]");
+    const goBtn = e.target.closest("[data-go]");
+    if (stepBtn) go(idx + Number(stepBtn.dataset.step));
+    else if (goBtn) go(Number(goBtn.dataset.go));
+    else if (e.target === stage) go(idx + 1); // clicking the peeking next card
+  });
+  place();
+}
+
 // ---- Per-page setup: runs on first load and after every page turn ----
 const CONTACT_EMAIL = "justinsuchit37@gmail.com";
 function init() {
   const board = document.getElementById("board");
   if (board) {
-    board.innerHTML = SITES.map((s) => `
-      <article class="site">
-        <button class="site-shot" data-open="${s.slug}" aria-label="Case notes for ${esc(s.name)}" tabindex="-1">${shot(s)}</button>
-        <div class="site-body">
-          <p class="site-status">${lamp(s.status)}</p>
-          <button class="site-name" data-open="${s.slug}" aria-haspopup="dialog">${esc(s.name)}</button>
-          <p class="site-client">${esc(s.client)}</p>
-          <p class="site-desc">${esc(s.summary)}</p>
-          <p class="site-stack">${s.stack.slice(0, 4).map(esc).join(", ")}</p>
+    const chev = (d) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+    board.innerHTML = `
+      <div class="wheel" id="wheel" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Websites. Scroll or use the up and down arrow keys to move between sites.">
+        <div class="wheel-stage">
+          ${SITES.map((s, i) => `
+          <article class="wcard" data-i="${i}" aria-label="${esc(s.name)}">
+            <button class="site-shot" data-open="${s.slug}" aria-label="Case notes for ${esc(s.name)}" tabindex="-1">${shot(s)}</button>
+            <div class="wcard-body">
+              <p class="site-status">${lamp(s.status)}</p>
+              <button class="site-name" data-open="${s.slug}" aria-haspopup="dialog">${esc(s.name)}</button>
+              <p class="site-client">${esc(s.client)}</p>
+              <p class="site-desc">${esc(s.summary)}</p>
+              <p class="site-stack">${s.stack.slice(0, 4).map(esc).join(", ")}</p>
+              <div class="site-links">
+                ${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">Visit site</a>` : ""}
+                <button data-open="${s.slug}" aria-haspopup="dialog">Case notes</button>
+              </div>
+            </div>
+          </article>`).join("")}
         </div>
-        <div class="site-links">
-          ${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">Visit site</a>` : ""}
-          <button data-open="${s.slug}" aria-haspopup="dialog">Case notes</button>
+        <div class="wheel-side">
+          <button class="wheel-btn" data-step="-1" aria-label="Previous site">${chev("M6 15l6-6 6 6")}</button>
+          <ol class="wheel-nodes">
+            ${SITES.map((s, i) => `<li><button data-go="${i}" aria-label="Go to ${esc(s.name)}"><span class="node"></span></button></li>`).join("")}
+          </ol>
+          <button class="wheel-btn" data-step="1" aria-label="Next site">${chev("M6 9l6 6 6-6")}</button>
+          <p class="wheel-count" id="wheelCount" aria-live="polite"></p>
         </div>
-      </article>`).join("");
+      </div>`;
+    setupWheel(document.getElementById("wheel"));
     document.getElementById("systems").innerHTML = SYSTEMS.map((s) => `
       <button class="system" data-open="${s.slug}" aria-haspopup="dialog">
         <b>${esc(s.name)}</b><span>${esc(s.summary)}</span>

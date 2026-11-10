@@ -281,3 +281,43 @@ main.out-back::after, main.in-back::after { transform: scaleX(-1); }
 .paths p { margin-top: .3rem; max-width: 44ch; }
 .paths a { font-weight: 600; }
 .case-top .site-status { margin: 0; }
+
+/* Website wheel */
+.board { border-top: 0; }
+.wheel { --wh: clamp(34rem, 80vh, 50rem); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem; outline: none; }
+.wheel:focus-visible { outline: 3px solid var(--yellow); outline-offset: 6px; border-radius: 4px; }
+.wheel-stage { position: relative; height: var(--wh); overflow: hidden; perspective: 1800px; perspective-origin: 50% 40%; cursor: pointer; -webkit-mask-image: linear-gradient(#000 82%, transparent); mask-image: linear-gradient(#000 82%, transparent); }
+.wcard { position: absolute; inset: 0 0 auto 0; height: 62%; display: grid; grid-template-columns: 1.15fr 1fr; background: var(--ink-2); border: 1px solid var(--on-ink-line); border-radius: 4px; overflow: hidden; cursor: default; transform-origin: 50% 0; transition: transform .6s cubic-bezier(.2, .7, .2, 1), opacity .6s ease; will-change: transform; }
+.wcard.is-next { pointer-events: none; }
+.wcard .site-shot { height: 100%; min-height: 0; overflow: hidden; }
+.wcard .shot { height: 100%; aspect-ratio: auto; border: 0; border-radius: 0; }
+.wcard .shot-none { font-size: 2.25rem; }
+.wcard:hover .shot { transform: scale(1.03); }
+.wcard-body { display: flex; flex-direction: column; padding: clamp(1.25rem, 2.5vw, 2.5rem); min-width: 0; overflow: hidden; }
+.wcard .site-name { font-size: clamp(1.7rem, 2.7vw, 2.6rem); }
+.wcard .site-desc { font-size: 1.0625rem; margin-top: .5rem; }
+.wcard .site-links { grid-column: auto; padding-top: 1.25rem; margin-top: auto; justify-content: flex-start; }
+.wheel-side { display: flex; flex-direction: column; align-items: center; gap: .75rem; height: calc(var(--wh) * .62); }
+.wheel-btn { width: 2.75rem; height: 2.75rem; flex: none; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid var(--on-ink-line); background: transparent; color: var(--paper); cursor: pointer; transition: border-color .15s, background .15s, color .15s; }
+.wheel-btn:hover:not(:disabled) { background: var(--yellow); border-color: var(--yellow); color: var(--ink); }
+.wheel-btn:disabled { opacity: .3; cursor: default; }
+.wheel-nodes { flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 0; }
+.wheel-nodes li { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; }
+.wheel-nodes li + li::before { content: ""; position: absolute; left: 50%; bottom: 50%; width: 2px; height: 100%; margin-left: -1px; background: var(--on-ink-line); transition: background .3s; }
+.wheel-nodes li.passed::before, .wheel-nodes li.now::before { background: var(--yellow); }
+.wheel-nodes button { all: unset; position: relative; z-index: 1; cursor: pointer; padding: .35rem; display: grid; }
+.wheel-nodes button:focus-visible { outline: 3px solid var(--yellow); border-radius: 50%; }
+.wheel-nodes .node { display: block; width: .9rem; height: .9rem; border-radius: 50%; border: 2px solid var(--on-ink-soft); background: var(--ink); transition: transform .2s, background .3s, border-color .3s, box-shadow .3s; }
+.wheel-nodes .passed .node { background: var(--yellow); border-color: var(--yellow); }
+.wheel-nodes .now .node { background: var(--yellow); border-color: var(--paper); transform: scale(1.35); box-shadow: 0 0 0 5px rgb(245 197 24 / .22); }
+.wheel-nodes button:hover .node { border-color: var(--paper); transform: scale(1.35); }
+.wheel-count { font: 600 1rem/1 var(--display); color: var(--on-ink-soft); white-space: nowrap; }
+@media (max-width: 800px) {
+  .wheel { --wh: clamp(37rem, 84vh, 44rem); grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+  .wcard { height: 76%; grid-template-columns: 1fr; grid-template-rows: 11rem minmax(0, 1fr); }
+  .wcard .site-stack { display: none; }
+  .wcard .site-desc { font-size: 1rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .wheel-side { flex-direction: row; height: auto; }
+  .wheel-nodes { flex-direction: row; }
+  .wheel-nodes li + li::before { left: auto; right: 50%; bottom: auto; top: 50%; width: 100%; height: 2px; margin: -1px 0 0; }
+}
