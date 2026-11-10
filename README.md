@@ -8,8 +8,13 @@ Static portfolio site (HTML, CSS, vanilla JavaScript). No build step.
 - `resume.html` — print-friendly resume (Print, then Save as PDF)
 - `styles.css` — colours, type and layout
 - `script.js` — website and system entries, case notes dialog, contact form, page-flip navigation
-- `assets/fonts/` — Barlow and Barlow Condensed (SIL Open Font License)
+- `assets/fonts/` — Literata and Barlow (SIL Open Font License)
+- `assets/sites/` — screenshots shown on the Websites page, named by site slug
 - `assets/profile.jpg` — optional; add it to show a portrait in the hero
+
+## Design
+
+The site is styled as a book: the home page is the cover and contents, each other page is a chapter, and links between pages turn like a page.
 
 ## Editing
 

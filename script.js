@@ -325,16 +325,16 @@ function init() {
         <div class="wheel-stage">
           ${SITES.map((s, i) => `
           <article class="wcard" data-i="${i}" aria-label="${esc(s.name)}">
-            <button class="site-shot" data-open="${s.slug}" aria-label="Case notes for ${esc(s.name)}" tabindex="-1">${shot(s)}</button>
+            <button class="site-shot" data-open="${s.slug}" aria-label="Case notes for ${esc(s.name)}" tabindex="-1">${shot(s)}<span class="plate-cap">Plate ${i + 1}: ${esc(s.client.split(",")[0])}</span></button>
             <div class="wcard-body">
               <p class="site-status">${lamp(s.status)}</p>
               <button class="site-name" data-open="${s.slug}" aria-haspopup="dialog">${esc(s.name)}</button>
               <p class="site-client">${esc(s.client)}</p>
               <p class="site-desc">${esc(s.summary)}</p>
-              <p class="site-stack">${s.stack.slice(0, 4).map(esc).join(", ")}</p>
+              <p class="site-stack">Built with ${s.stack.slice(0, 4).map(esc).join(", ")}.</p>
               <div class="site-links">
-                ${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">Visit site</a>` : ""}
-                <button data-open="${s.slug}" aria-haspopup="dialog">Case notes</button>
+                ${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">Visit the site</a>` : ""}
+                <button data-open="${s.slug}" aria-haspopup="dialog">Read the case notes</button>
               </div>
             </div>
           </article>`).join("")}
