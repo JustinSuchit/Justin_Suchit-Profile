@@ -192,7 +192,7 @@ const SYSTEMS = [
 ];
 
 // Slugs that have a screenshot at assets/sites/<slug>.jpg
-const SHOTS = new Set(["webcraft-tt", "jagmohan-sawmill", "amcol-industrial", "amcol-group", "caribbean-transport-services"]);
+const SHOTS = new Set(["webcraft-tt", "jagmohan-sawmill", "amcol-hardware", "amcol-industrial", "amcol-group", "caribbean-transport-services"]);
 const shot = (s, big) => SHOTS.has(s.slug)
   ? `<img class="shot" src="assets/sites/${s.slug}.jpg" alt="Screenshot of ${esc(s.name)}" width="800" height="500" ${big ? "" : 'loading="lazy"'}>`
   : `<span class="shot shot-none" aria-hidden="true">${esc(s.client.split(",")[0])}</span>`;
