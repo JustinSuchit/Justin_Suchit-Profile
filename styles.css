@@ -346,3 +346,23 @@ main .pager-row { padding-block: 1.3rem; }
 .startup { padding: 0 0 4.5rem; }
 .startup::before { content: ""; display: block; height: 1px; margin: 0 var(--gutter); background: var(--line); }
 main .startup-grid { padding-top: 3rem; border-top: 0; }
+
+/* Baby blue cover */
+:root { --cover: #a6d6f2; }
+.hero { color: var(--ink); background-color: var(--cover); background-image: repeating-linear-gradient(0deg, rgb(16 36 44 / .035) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgb(16 36 44 / .03) 0 1px, transparent 1px 3px); }
+.hero .wrap { border-color: var(--ink); outline-color: rgb(16 36 44 / .4); }
+.avail { color: var(--ink-2); }
+.avail .lamp-live { background: var(--live); }
+.hero-foot { border-top-color: var(--ink); }
+.hero-role { color: var(--ink); }
+.hero-text p { color: var(--ink-2); }
+.hero .btn { border-color: var(--ink); color: var(--ink); }
+.hero .btn:hover { background: var(--ink); color: var(--paper); }
+.hero .btn-solid { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.hero .btn-solid:hover { background: var(--blue); border-color: var(--blue); color: var(--paper); }
+.hero-photo { border-color: var(--paper); }
+.hero-art { color: var(--ink); }
+.hero-art [fill="var(--paper)"] { fill: var(--paper); }
+.hero-art [stroke="var(--blue)"] { stroke: var(--blue); }
+.hero-art [stroke="var(--soft)"] { stroke: var(--soft); }
+.hero-art [fill="var(--blue)"] { fill: var(--blue); }
